@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card m-4">
+    <div class="card m-5" id="wrappercontent" >
         <div class="card-body">
-        <div class="row justify-content-center p-4 h-100" id="wrappercontent" >
-            <div class="col-md-5 my-auto">
+        <div class="row justify-content-center h-100">
+            <div class="col-md-5 p-5 my-auto">
                 <img src="{{asset('images/books.jpg')}}" alt="" class="img-fluid">
             </div>
 
-            <div class="col-md-5 p-4 text-center align-middle my-auto">
+            <div class="col-md-5 text-center align-middle my-auto">
                         <h2 class=" mb-3 font-weight-normal">PSMS Sign In</h2>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf

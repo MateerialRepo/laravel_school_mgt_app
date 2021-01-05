@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('page_name')
-    Dashboard
+    Student's List
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <h1 class="text-center mt-3">List of Students</h1>
 
     @if (session('status'))
-                <div class="alert alert-info">{{session('status')}}</div>
+        <div class="alert alert-success">{{session('status')}}</div>
     @endif
 
     <table class="table table-bordered table-striped mt-4">
@@ -17,7 +17,6 @@
             <tr>
                 <th>#</th>
                 <th>Student Name</th>
-                <th>Student Class</th>
                 <th>Gender</th>
                 <th>Phone Number</th>
                 <th>Address</th>              
@@ -25,20 +24,20 @@
             </tr>
             </thead>
             <tbody>
-                {{-- @foreach ($student as $item) {{$item->id}}--}}
+                <?php $count = 0 ?>
+                @foreach ($students as $student)
                 <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td scope="row">{{++$count}}</td>
+                    <td>{{$student->name}}</td>
+                    <td>{{$student->gender}}</td>
+                    <td>{{$student->phone}}</td>
+                    <td>{{$student->address}}</td>
                     <td class="text-center">
-                        <a href="edit/"><button class="btn btn-success mr-2">Edit</button></a>
-                        <a href="delete/"><button class="btn btn-danger">Delete</button></a>                        
+                        <a href="edit/{{$student->user_id}}"><button class="btn btn-success mr-2">Edit</button></a>
+                        <a href="delete/{{$student->user_id}}"><button class="btn btn-danger">Delete</button></a>                        
                     </td>
                 </tr>
-                {{-- @endforeach                --}}
+                @endforeach
             </tbody>
     </table>
     </div>

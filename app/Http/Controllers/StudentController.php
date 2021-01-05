@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     //
     //
+    function __construct(){
+        $this->middleware('auth');
+    }
+
     function index(){
         return view('pages.liststudents');
     }
 
     function list(){
 
-        $student = Student::all();
-        return view('list',['student'=>$student]);
+        $students = User::join('students', 'users.id', '=', 'students.user_id')->get();
+        //dd($student);
+        return view('pages.liststudents',['students'=>$students]);
     }
 
     function showForm(){
@@ -25,8 +31,53 @@ class StudentController extends Controller
 
     
     function addStudent(Request $req){
-        $req->dd();
+       // $req->dd();
+        // $user_id = User::max('id');
+        // dd($user_id);
         // to validate the form inputs
+        $req->validate([
+            'firstname' => 'required|string' ,
+            'lastname' => 'required|string' ,
+            'phone' => 'required| numeric' ,
+            'email' => 'required|email',
+            'gender' => 'required',
+            'dob' => 'required|date',
+            'address' => 'required'
+        ]);
+        
+        //save into user table
+        $user = new User;
+        $user->name = $req->input('firstname')." ".$req->input('lastname');
+        $user->email = $req->input('email');
+        $user->role_id = $req->input('role');
+        $user->save();
+
+        //save into student table
+        $user_id = User::max('id');
+        $student = new Student;
+        $student->user_id = $user_id;
+        $student->gender = $req->input('gender');
+        $student->phone = $req->input('phone');
+        $student->dob = $req->input('dob');
+        $student->address = $req->input('address');
+        $student->save();
+        
+        $req->session()->flash('status', 'Student Successfully added');
+        return redirect('/students');
+        
+        //code to store student data in the database and redirect to the page
+            
+    
+    }
+
+    function edit($id){
+        $student = User::find($id)->join('students', 'users.id', '=', 'students.user_id');
+        return view('/edit',['student'=>$student]);
+    }
+
+
+    function updateStudent(Request $req){
+        //return $req->input();
         $req->validate([
             'firstname' => 'required|string' ,
             'lasttname' => 'required|string' ,
@@ -36,49 +87,16 @@ class StudentController extends Controller
             'dob' => 'required|date',
             'address' => 'required'
         ]);
-
-        
-
-        // //return $req->input();
-        // $buka = new Buka;
-        // $buka->name = $req->input('buka');
-        // $buka->address = $req->input('address');
-        // $buka->email = $req->input('emailaddress');
-        // $buka->save();
-        // $req->session()->flash('status', 'Buka Successfully added');
-        // return redirect('/list');
-
-    }
-
-    function edit($id){
-        $data = Buka::find($id);
-        return view('/edit',['data'=>$data]);
-    }
-
-
-    function updateBuka(Request $req){
-        //return $req->input();
-        $req->validate([
-            'buka' => 'required|string' ,
-            'address' => 'required',
-            'emailaddress' => 'required|email'
-        ]);
         
         //code to find the id of the record, update and return to the list page
-        $buka = Buka::find($req->id);
-        $buka->name = $req->input('buka');
-        $buka->address = $req->input('address');
-        $buka->email = $req->input('emailaddress');
-        $buka->save();
-        $req->session()->flash('status', 'Buka Successfully Updated');
-        return redirect('/list');
+        
     }
 
 
     function delete($id){
-        $data = Buka::find($id);
+        $data = Student::find($id);
         $data->delete();
-        session()->flash('status', 'Record Successfully deleted');
-        return redirect('/list');
+        session()->flash('status', 'Student Successfully deleted');
+        //return redirect('');
     }
 }

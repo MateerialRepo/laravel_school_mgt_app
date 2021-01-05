@@ -1,30 +1,25 @@
 @extends('layouts.dashboard')
 
 @section('page_name')
-    New Student
+    New Teacher
 @endsection
 
 @section('content')
     <div class="card-body">
-        <h2 class="mt-4 mb-1 text-center">Add Student</h2>
-
-        @if (session('status'))
-                <div class="alert alert-info">{{session('status')}}</div>
-        @endif
-        
+        <h2 class="mt-4 mb-1 text-center">Create Teacher</h2>        
         <form method="post" action="">
             @csrf
 
-            <input type="hidden" class="form-control mb-3" name="role" value="3">
+            <input type="hidden" class="form-control mb-3" name="role" value="2">
 
             <div class="form-group">
-                <input type="text" class="form-control mb-3" name="firstname" placeholder="Student First Name" 
+                <input type="text" class="form-control mb-3" name="firstname" placeholder="Teacher's First Name" 
                 value="{{old('firstname')}}">
                 @error('firstname')<small class="alert alert-danger">{{$message}}</small> @enderror
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control mb-3" name="lastname" placeholder="Student Last Name" 
+                <input type="text" class="form-control mb-3" name="lastname" placeholder="Teacher's Last Name" 
                 value="{{old('lastname')}}">
                 @error('lastname')<small class="alert alert-danger">{{$message}}</small> @enderror
             </div>
@@ -35,7 +30,7 @@
             </div>
         
             <div class="form-group">
-                <input type="email" class="form-control mb-3" name="email" placeholder="Student Email" value="{{old('email')}}">
+                <input type="email" class="form-control mb-3" name="email" placeholder="Teacher's Email" value="{{old('email')}}">
                 @error('email')<small class="alert alert-danger">{{$message}}</small> @enderror
             </div>
 
@@ -57,14 +52,8 @@
             </div>
 
             <div class="form-group">
-                <label for="dob">Date Of Birth:</label>
-                <input type="date" class="form-control mb-3" name="dob" placeholder="" id="dob" value="{{old('dob')}}">
-                @error('dob')<small class="alert alert-danger">{{$message}}</small> @enderror
-            </div>
-
-            <div class="form-group">
                 <label for="textarea1">Address:</label>
-                <textarea class="form-control mb-3" id="textarea1" rows="3" name="address" placeholder="Student's full address">{{old('address')}}</textarea>
+                <textarea class="form-control mb-3" id="textarea1" rows="3" name="address" placeholder="Teacher's full address">{{old('address')}}</textarea>
                 @error('address')<small class="alert alert-danger">{{$message}}</small> @enderror
               </div>
 

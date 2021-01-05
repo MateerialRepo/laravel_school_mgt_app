@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +18,22 @@ use App\Http\Controllers\StudentController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/students',[StudentController::class, 'index'])->name('liststudents');
+Route::get('/students',[StudentController::class, 'list'])->name('liststudents');
 
 Route::get('/addstudent',[StudentController::class, 'showForm'])->name('addstudent');
 
 Route::post('/addstudent',[StudentController::class, 'addStudent']);
+
+Route::get('/teachers',[TeacherController::class, 'index'])->name('listteachers');
+
+Route::get('/addteacher',[TeacherController::class, 'showForm'])->name('addteacher');
+
+Route::post('/addteacher',[TeacherController::class, 'addTeacher']);
 

@@ -3,7 +3,7 @@
     <div class="sidebar-sticky pt-3">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link sidebar-heading" href="#">
+          <a class="nav-link sidebar-heading" href="{{route('home')}}">
             <span data-feather="home"></span>
             Dashboard <span class="sr-only">(current)</span>
           </a>
@@ -21,13 +21,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{{route('listteachers')}}">
             <span data-feather="users"></span>
             All Teachers
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{{route('addteacher')}}">
             <span data-feather="bar-chart-2"></span>
             Create Teacher
           </a>
