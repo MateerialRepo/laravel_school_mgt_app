@@ -37,3 +37,5 @@ Route::get('/addteacher',[TeacherController::class, 'showForm'])->name('addteach
 
 Route::post('/addteacher',[TeacherController::class, 'addTeacher']);
 
+
+

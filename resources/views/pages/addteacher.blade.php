@@ -45,8 +45,8 @@
                     <label class="form-check-label" for="female"> Female </label>
                 </div>
                 <div class="form-check disabled mb-3">
-                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" {{ (old('gender') == 'other') ? 'checked' : '' }}>
-                    <label class="form-check-label" for="other">  Other  </label>
+                    <input class="form-check-input" type="radio" name="gender" id="others" value="others" {{ (old('gender') == 'others') ? 'checked' : '' }}>
+                    <label class="form-check-label" for="others">  Others  </label>
                 </div>
                 @error('gender')<small class="alert alert-danger">{{$message}}</small> @enderror
             </div>

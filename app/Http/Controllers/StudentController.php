@@ -62,10 +62,11 @@ class StudentController extends Controller
         $student->address = $req->input('address');
         $student->save();
         
+        //redirect to the page the list student page with the sucess message
         $req->session()->flash('status', 'Student Successfully added');
         return redirect('/students');
         
-        //code to store student data in the database and redirect to the page
+        //code to store student data in the database and 
             
     
     }
