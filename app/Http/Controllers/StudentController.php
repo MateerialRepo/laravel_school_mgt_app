@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -72,8 +74,8 @@ class StudentController extends Controller
     }
 
     function edit($id){
-        $student = User::find($id)->join('students', 'users.id', '=', 'students.user_id');
-        return view('/edit',['student'=>$student]);
+        $student = User::join('students', 'users.id', '=', 'students.user_id')->find($id);
+        return view('pages.editstudent',['student'=>$student]);
     }
 
 
@@ -81,23 +83,50 @@ class StudentController extends Controller
         //return $req->input();
         $req->validate([
             'firstname' => 'required|string' ,
-            'lasttname' => 'required|string' ,
+            'lastname' => 'required|string' ,
             'phone' => 'required| numeric' ,
             'email' => 'required|email',
             'gender' => 'required',
             'dob' => 'required|date',
             'address' => 'required'
         ]);
+
+
+        //Update user table
+        $user = User::find($req->user_id);
+        $user->name = $req->input('firstname')." ".$req->input('lastname');
+        $user->email = $req->input('email');
+        $user->role_id = $req->input('role');
+        $user->save();
+
+        //Update student table
+        $student = Student::find($req->stud_id);
+        $student->user_id = $req->user_id;
+        $student->gender = $req->input('gender');
+        $student->phone = $req->input('phone');
+        $student->dob = $req->input('dob');
+        $student->address = $req->input('address');
+        $student->save();
         
         //code to find the id of the record, update and return to the list page
+        //redirect to the page the list student page with the sucess message
+        $req->session()->flash('status', 'Student Record Successfully Updated');
+        return redirect('/students');
         
     }
 
 
-    function delete($id){
-        $data = Student::find($id);
-        $data->delete();
-        session()->flash('status', 'Student Successfully deleted');
-        //return redirect('');
+    function deleteStudent($id){
+        //delete the student record from user table
+        $user = User::find($id);
+        $user->delete();
+        
+        // delete the student record from the student table
+        // $student = Student::where('user_id', $id)->get();
+        // $student->delete();
+        DB::table('students')->where('user_id', $id)->delete();
+
+        session()->flash('status', 'Student Record Successfully Deleted');
+        return redirect('/students');
     }
 }

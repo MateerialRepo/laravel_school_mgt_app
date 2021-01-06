@@ -31,6 +31,13 @@ Route::get('/addstudent',[StudentController::class, 'showForm'])->name('addstude
 
 Route::post('/addstudent',[StudentController::class, 'addStudent']);
 
+Route::get('/editstudent/{id}',[StudentController::class, 'edit'])->name('editstudent');
+
+Route::post('/editstudent',[StudentController::class, 'updateStudent']);
+
+Route::get('/deletestudent/{id}',[StudentController::class, 'deleteStudent']);
+
+
 Route::get('/teachers',[TeacherController::class, 'index'])->name('listteachers');
 
 Route::get('/addteacher',[TeacherController::class, 'showForm'])->name('addteacher');

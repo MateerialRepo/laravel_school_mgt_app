@@ -33,8 +33,8 @@
                     <td>{{$student->phone}}</td>
                     <td>{{$student->address}}</td>
                     <td class="text-center">
-                        <a href="edit/{{$student->user_id}}"><button class="btn btn-success mr-2">Edit</button></a>
-                        <a href="delete/{{$student->user_id}}"><button class="btn btn-danger">Delete</button></a>                        
+                        <a href="editstudent/{{$student->user_id}}"><button class="btn btn-success mr-2">Edit</button></a>
+                        <a href="deletestudent/{{$student->user_id}}"><button class="btn btn-danger">Delete</button></a>                        
                     </td>
                 </tr>
                 @endforeach
