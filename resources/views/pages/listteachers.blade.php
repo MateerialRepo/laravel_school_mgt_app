@@ -35,8 +35,8 @@
                     <td>{{$teacher->email}}</td>
                     <td>{{$teacher->address}}</td>
                     <td class="text-center">
-                        <a href="edit/"{{$teacher->user_id}}><button class="btn btn-success mr-2">Edit</button></a>
-                        <a href="delete/"{{$teacher->user_id}}><button class="btn btn-danger">Delete</button></a>                        
+                        <a href="editteacher/{{$teacher->user_id}}"><button class="btn btn-success mr-2">Edit</button></a>
+                        <a href="deleteteacher/{{$teacher->user_id}}"><button class="btn btn-danger">Delete</button></a>                        
                     </td>
                 </tr>
                 @endforeach

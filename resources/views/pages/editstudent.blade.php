@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('page_name')
-    New Student
+    Edit Student
 @endsection
 
 @section('content')

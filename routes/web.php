@@ -44,5 +44,11 @@ Route::get('/addteacher',[TeacherController::class, 'showForm'])->name('addteach
 
 Route::post('/addteacher',[TeacherController::class, 'addTeacher']);
 
+Route::get('/editteacher/{id}',[TeacherController::class, 'editForm'])->name('editteacher');
+
+Route::post('/editteacher',[TeacherController::class, 'updateTeacher']);
+
+Route::get('/deleteteacher/{id}',[TeacherController::class, 'deleteTeacher']);
+
 
 
