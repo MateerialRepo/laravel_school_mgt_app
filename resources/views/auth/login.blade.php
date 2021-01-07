@@ -8,8 +8,8 @@
                 <img src="{{asset('images/books.jpg')}}" alt="" class="img-fluid">
             </div>
 
-            <div class="col-md-5 text-center align-middle my-auto">
-                        <h2 class=" mb-3 font-weight-normal">PSMS Sign In</h2>
+            <div class="col-md-5 align-middle my-auto">
+                        <h2 class=" mb-3 font-weight-normal text-center">PSMS Sign In</h2>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -54,8 +54,8 @@
                             </div>
 
                             <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary  btn-block">
                                         Login
                                     </button>
 
