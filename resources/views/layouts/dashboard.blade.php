@@ -1,85 +1,86 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="generator" content="">
-    <title>PSMS Dashboard</title>
-
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EduManage &mdash; @yield('page_name')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+</head>
+<body>
 
-    <style>
-        .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-    
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    
-  </head>
-  <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark text-white flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{{route('home')}}">PSMS School Management</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+{{-- Sidebar --}}
+@include('layouts.sidebar')
 
-    <ul class="nav ml-auto">    
-        <li class="nav-item ">
-            <a class="nav-link" href="#">
-                {{ Auth::user()->name }}
-            </a>
-        </li>
-        <li>
-            <div>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="">
-                    @csrf
-                    <button type="submit" class="btn btn-info">Logout</button>
-                </form>
-            </div>
-        </li>
-    </ul>
-</nav>
+{{-- Main wrapper --}}
+<div class="main-content" id="mainContent">
 
-<div class="container-fluid">
-  <div class="row justify-content-center">
-    @include('layouts.sidebar')
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="">@yield('page_name')</h1></h1>
-      </div>
-
-        {{-- Main content of the page --}}
-      <div class="col-md-9 col-lg-9 px-md-4">
-        <div class="card">
-            @yield('content')
+    {{-- Top Navbar --}}
+    <nav class="top-navbar d-flex align-items-center justify-content-between px-4">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-icon sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-list fs-5"></i>
+            </button>
+            <nav aria-label="breadcrumb" class="d-none d-md-block">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item active">@yield('page_name')</li>
+                </ol>
+            </nav>
         </div>
-      </div>
-    </main>
-  </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <div class="dropdown">
+                <button class="btn d-flex align-items-center gap-2 user-menu" data-bs-toggle="dropdown">
+                    <div class="avatar-sm">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+                    <span class="d-none d-md-inline fw-500">{{ Auth::user()->name }}</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-1">
+                    <li><h6 class="dropdown-header">{{ Auth::user()->email }}</h6></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger">
+                                <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {{-- Page Content --}}
+    <div class="page-content">
+        <div class="page-header mb-4">
+            <h4 class="page-title">@yield('page_name')</h4>
+        </div>
+        @yield('content')
+    </div>
 
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <script src="{{ asset('js/dashboard.js') }}"></script></body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('expanded');
+    });
+    // Set active nav link
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
+</script>
+</body>
 </html>
